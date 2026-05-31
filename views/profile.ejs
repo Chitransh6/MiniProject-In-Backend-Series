@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body>
+    
+   <div class="w-full min-h-screen bg-zinc-900 p-10">
+
+    <div class = " w-50 w-full flex justify-end "><a class= "bg-red-500 px-2 py-2 rounded-lg text-white " href="/logout">
+        logout
+    </a></div>
+
+    <h1 class= "text-blue-500 text-3xl w-50 my-5 ">hayyy, <%= user.username %> </h1>
+
+    <form action ="/post" method = "post">
+
+        <input class = "px-2 py-0 text-white rounded-lg border-2 block mb-4 outline-none w-79 h-20" type="textarea" placeholder = "write what in your mind" name = "textarea">
+
+        <input type="submit" class = "text-white bg-blue-600 rounded-lg mt-2 px-2 py-4 text-sm"value = "Create Your Post">
+
+    </form>
+    <hr class = "my-4 text-zinc-800">
+
+    <h2 class= "mt-8 text-zinc-400 ">All Posts</h2>
+    <div class = "PostContainer p-5 w-full flex gap-2 flex-wrap">
+
+        <% user.posts.reverse().forEach(function(post){ %>
+              <div class= "flex flex-col ml-5 w-fit p-2 px-4 rounded-lg border-zinc-800 border-1 bg-zinc-800">
+
+        <h3 class = "text-blue-500">@<%=user.username%>, posts</h3>
+
+         <p class = "text-zinc-300 mt-2 text-wrap"><%=post.content%></p>
+         
+         <div class = "flex gap-4 ">
+
+         <a class = "text-blue-400 rounded-lg mt-4" href="/like/<%=post._id%>" > <%=post.likes.length%> <%= post.likes.indexOf(user._id) ? "like" : "Unlike" %></a>
+
+         <a href="/edit/<%=post._id%>" class = "text-zinc-400 mt-4">edit</a>
+         </div>
+
+         </div>
+       <% }) %>
+
+        
+    </div>
+   </div>
+</body>
+</html>
