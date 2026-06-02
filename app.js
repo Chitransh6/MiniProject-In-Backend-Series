@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 const path = require("path");
+const upload = require("./config/multerconfig");
+
 const userModel = require("./models/user");
 const bcrypt = require("bcrypt");
 const postModel = require("./models/post");
@@ -15,6 +17,31 @@ app.set("view engine","ejs");
 
 app.use(express.static(path.join(__dirname+"/public")));
 
+ 
+
+
+
+app.get("/profileupload",(req,res)=>{
+    res.render("profileupload");
+})
+
+app.post("/profileupload",isLogedin,upload.single("image"),async (req,res)=>{
+
+  console.log(req.file);
+
+ const user = await userModel.findOneAndUpdate({email : req.user.email},
+    {
+        $set:{
+              profilepic : req.file.filename    
+        }
+    },
+    {new : true}
+ )
+ res.redirect("/profile");
+
+
+  
+})
 
 app.get("/",(req,res)=>{
     res.render("index");
@@ -27,7 +54,7 @@ app.post("/register",async(req,res)=>{
 
     let user = await userModel.findOne({email : email});
 
-    if(user) return res.status(500).send("User Already Registered");
+    if(user) return res.redirect("/login");
 
     bcrypt.genSalt(10,(err,val)=>{
         bcrypt.hash(password,val,async(err,ans)=>{

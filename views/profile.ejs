@@ -14,7 +14,15 @@
         logout
     </a></div>
 
-    <h1 class= "text-blue-500 text-3xl w-50 my-5 ">hayyy, <%= user.username %> </h1>
+    <div class = "flex gap-3 mb-2">
+
+     <div class = "w-10 h-10 overflow-hidden"> <img class = "rounded-lg  w-full h-full" src="/images/<%=user.profilepic%>" alt="">
+        </div>
+
+      <h1 class= "text-blue-500 text-3xl w-full ">Hayyy, <%= user.username %> 👋</h1>
+
+    </div>
+    
 
     <form action ="/post" method = "post">
 
