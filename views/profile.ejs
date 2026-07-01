@@ -9,10 +9,23 @@
 <body>
     
    <div class="w-full min-h-screen bg-zinc-900 p-10">
+    
+    <div class = "w-full flex justify-end "></div>
 
-    <div class = " w-50 w-full flex justify-end "><a class= "bg-red-500 px-2 py-2 rounded-lg text-white " href="/logout">
+
+    <div class = "w-full flex justify-end gap-10">
+
+        <div class = "bg-blue-600 w-30 h-10 text-center hover:bg-blue-700 p-2 rounded-lg text-white">
+        <a href="/allpost">All Posts 🎥</a>
+    </div>
+
+        <a class= "bg-blue-600  hover:bg-blue-700 px-2 py-2 rounded-lg text-white " href="/profileupload">
+        Upload Profile
+    </a>
+        <a class= "bg-red-500 px-2 py-2 rounded-lg text-white " href="/logout">
         logout
     </a></div>
+   
 
     <div class = "flex gap-3 mb-2">
 
@@ -23,14 +36,18 @@
 
     </div>
     
-
+   <div class = "flex gap-10">
     <form action ="/post" method = "post">
 
         <input class = "px-2 py-0 text-white rounded-lg border-2 block mb-4 outline-none w-79 h-20" type="textarea" placeholder = "write what in your mind" name = "textarea">
 
-        <input type="submit" class = "text-white bg-blue-600 rounded-lg mt-2 px-2 py-4 text-sm"value = "Create Your Post">
+        <input type="submit" class = "text-white bg-blue-600 rounded-lg mt-2 px-2 py-4 text-sm hover:bg-blue-800" value = "Create Your Post 📢">
 
     </form>
+
+    
+
+    </div>
     <hr class = "my-4 text-zinc-800">
 
     <h2 class= "mt-8 text-zinc-400 ">All Posts</h2>
@@ -48,6 +65,7 @@
          <a class = "text-blue-400 rounded-lg mt-4" href="/like/<%=post._id%>" > <%=post.likes.length%> <%= post.likes.indexOf(user._id) ? "like" : "Unlike" %></a>
 
          <a href="/edit/<%=post._id%>" class = "text-zinc-400 mt-4">edit</a>
+         <a href="/delete/<%=post._id%>" class = "text-red-400 mt-4">delete</a>
          </div>
 
          </div>

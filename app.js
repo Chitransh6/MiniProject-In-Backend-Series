@@ -19,11 +19,20 @@ app.use(express.static(path.join(__dirname+"/public")));
 
  
 
-
+app.get("/",(req,res)=>{
+    res.render("index");
+})
 
 app.get("/profileupload",(req,res)=>{
     res.render("profileupload");
 })
+
+app.get("/allpost",isLogedin,async (req,res)=>{
+    const posts = await postModel.find({});
+      await postModel.populate(posts, { path: "user" });
+
+   res.render("allpost",{posts});
+});
 
 app.post("/profileupload",isLogedin,upload.single("image"),async (req,res)=>{
 
@@ -43,9 +52,11 @@ app.post("/profileupload",isLogedin,upload.single("image"),async (req,res)=>{
   
 })
 
-app.get("/",(req,res)=>{
-    res.render("index");
+app.get("/delete/:id",async(req,res)=>{
+           const user = await postModel.findOneAndDelete({_id : req.params.id});
+           res.redirect("/profile");
 })
+
 
 
 
@@ -88,10 +99,10 @@ app.post("/login",async(req,res)=>{
 
     let user = await userModel.findOne({email : email});
 
-    if(!user) return res.status(500).send("User Not Found");
+    if(!user) res.redirect("/login");
 
     bcrypt.compare(password,user.password,(err,result)=>{
-        if(!result) return res.status(500).send("User Not Found");
+        if(!result) res.redirect("login");
 
 
        else{
