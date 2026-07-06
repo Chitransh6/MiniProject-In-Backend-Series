@@ -162,11 +162,27 @@ app.get("/like/:id",isLogedin, async(req,res)=>{
    }
    await post.save();
 
-   res.redirect("/profile");
+   res.redirect("/profile");    
 
 
 
 });
+
+app.get("/likes/:id",isLogedin,async(req,res)=>{
+    let post = await postModel.findOne({_id : req.params.id});
+
+   if(post.likes.indexOf(req.user.userid) === -1){
+   post.likes.push(req.user.userid);
+   }
+
+   else{
+   post.likes.splice(post.likes.indexOf(req.user.userid));
+   }
+   await post.save();
+
+   res.redirect("/allpost");    
+
+})
 
 app.get("/edit/:id",isLogedin, async(req,res)=>{
    let post =  await postModel.findOne({_id : req.params.id});
